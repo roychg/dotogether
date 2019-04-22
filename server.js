@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const path = require("path");
 const db = require('lib/db')
+const bp = require("body-parser");
 const PORT = process.env.PORT || 8080;
 
 const initializeServer = async () => {
