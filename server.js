@@ -7,6 +7,7 @@ const db = require('lib/db')
 const bp = require("body-parser");
 const redis = require("./lib/redis");
 const PORT = process.env.PORT || 8080;
+let retryCount = 0;
 
 const initializeServer = async () => {
   let redisClient = null;
@@ -20,7 +21,7 @@ const initializeServer = async () => {
     console.log("Connecting to Mongo");
     await db.connect();
   } catch (error) {
-    console.log('Unable to connect to MongoDB')
+    console.log('Unable to connect to MongoDB ', error)
     if (++retryCount < 3) {
       console.log("Trying to connect to mongodb again in 3 seconds...");
       setTimeout(initializeServer, 3000);
@@ -35,6 +36,9 @@ const initializeServer = async () => {
   redisClient.on("error", err => {
     console.log("Error connecting to redis ", err);
   });
+
+  // initialize socket
+  require("lib/socket")(http);
 
   app.use(bp.json(), bp.urlencoded({ extended: false }));
   app.use(session(redisClient));
