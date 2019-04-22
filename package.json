@@ -3,5 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "author": "rc",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4"
+  }
 }
