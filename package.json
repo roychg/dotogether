@@ -17,6 +17,6 @@
     "shortid": "^2.2.14"
   },
   "scripts": {
-    "start:dev": "NODE_PATH=. nodemon server.js"
+    "start:dev": "NODE_PATH=. NODE_ENV=development nodemon server.js"
   }
 }
