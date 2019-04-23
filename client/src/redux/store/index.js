@@ -6,7 +6,7 @@ import socketMiddleWare from "./socket";
 const socket =  
   process.env.NODE_ENV === 'development' 
   ? io("http://localhost:8080")
-  : process.env.BASE_URL
+  : io("https://dotogether8.herokuapp.com")
 
 const isDev = 
   process.env.NODE_ENV === 'development' 
