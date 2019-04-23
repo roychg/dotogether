@@ -45,6 +45,15 @@ const initializeServer = async () => {
   app.use(passport.initialize());
   app.use(passport.session());
 
+  app.use("/api", require("./api"));
+
+
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "build")));
+    app.get("/*", function(req, res) {
+      res.sendFile(path.join(__dirname, "build", "index.html"));
+    });
+  }
 
   // ERROR HANDLER
   app.use((err, req, res, next) => {
