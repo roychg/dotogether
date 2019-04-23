@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@mongoosejs/double@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@mongoosejs/double/-/double-0.1.2.tgz#11760271a7335a2dd3d484bab8eedd323c6a154b"
+  integrity sha512-rtbdCEnTxJ6e24bXRbJdNWNFOFPQLEG1J83GrGIaa631TX92/8QK5Qx0+6QvXoezBYYvGvwWOZ6FSBwwbSSENQ==
+
 accepts@~1.3.4, accepts@~1.3.5:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.5.tgz#eb777df6011723a3b14e8a72c0805c8e86746bd2"

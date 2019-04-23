@@ -5,6 +5,7 @@
   "author": "rc",
   "license": "MIT",
   "dependencies": {
+    "@mongoosejs/double": "^0.1.2",
     "body-parser": "^1.18.3",
     "connect-redis": "^3.4.1",
     "dotenv": "^7.0.0",
