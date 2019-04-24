@@ -1,7 +1,6 @@
 ## doTogether 
-### Kanban style app utilizing
-
-##### [Demo](https://dotogether8.herokuapp.com/) - (no socket support)
+### Kanban style app 
+##### [Demo](https://dotogether8.herokuapp.com/)
 
 - React
 - Redux
