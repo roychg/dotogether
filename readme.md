@@ -8,10 +8,10 @@
 - MongoDB
 - Passport
 - Redis
-- Socket IO
+- Socket IO (no socket support when using the guest board)
 
 ### Todo
-- Archive Board/List
+- Archive Board/~~List~~
 - Remove data from DB
 - User invitation email
 - ...
