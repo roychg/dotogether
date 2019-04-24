@@ -64,7 +64,7 @@ const Menu = styled.div`
   }
 `
 
-const TeamTitle = ({ value, reference, update_team,remove_team }) => {
+const TeamTitle = ({ value, reference, update_team,remove_team, visible }) => {
   const teamData = { ...reference };
   const [isEditing, setEdit] = useState(false);
   const [val, handleValue] = useState("");
@@ -119,21 +119,23 @@ const TeamTitle = ({ value, reference, update_team,remove_team }) => {
   return (
     <TitleWrapper>
       <Title onClick={() => setEdit(true)}>{value}</Title>
-      <Close
-        onClick={() => setTarget(reference.id)}
-        isOpen={deleteTarget !== undefined}
-      >
-        <Icon icon={<FiTrash2 />} color="inherit" className="remove-icon" />
-        {deleteTarget === reference.id && (
-          <MenuWrapper>
-            <OutsideClickHandler onOutsideClick={() => setTarget(undefined)}>
-              <Menu onClick={()=>remove_team(reference.id)}>
-                <Icon icon={<FiCheckSquare />} size="inherit" color='inherit' />
-              </Menu>
-            </OutsideClickHandler>
-          </MenuWrapper>
-        )}
-      </Close>
+      {visible && 
+        <Close
+          onClick={() => setTarget(reference.id)}
+          isOpen={deleteTarget !== undefined}
+        >
+          <Icon icon={<FiTrash2 />} color="inherit" className="remove-icon" />
+          {(deleteTarget === reference.id) && (
+            <MenuWrapper>
+              <OutsideClickHandler onOutsideClick={() => setTarget(undefined)}>
+                <Menu onClick={()=>remove_team(reference.id)}>
+                  <Icon icon={<FiCheckSquare />} size="inherit" color='inherit' />
+                </Menu>
+              </OutsideClickHandler>
+            </MenuWrapper>
+          )}
+        </Close>
+      }
     </TitleWrapper>
   );
 };
