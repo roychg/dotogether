@@ -5,6 +5,10 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { connect } from 'react-redux'
 import { update_list } from 'redux/modules/lists'
 import { isValid } from 'utils/helpers'
+import { ContextMenuTrigger } from "react-contextmenu";
+import ContMenu from "components/ContMenu";
+import Icon from "components/Icon";
+import { FiLayers } from "react-icons/fi";
 
 const Form = styled.form`
   min-height: 30px;
@@ -20,6 +24,10 @@ const Title = styled.div`
   padding: 0.5em;
   flex-shrink:0;
 `
+
+const ListMenu = (listData, handleUpdate) => ([
+  { id:`arch_${listData.sid}` , content:'Archive', icon:<FiLayers/>, action: ()=>handleUpdate(listData) }
+])
 
 const ListTitle = ({ value, dragHandle, reference, update_list }) => {
   const listData = {...reference}
@@ -39,6 +47,15 @@ const ListTitle = ({ value, dragHandle, reference, update_list }) => {
     handleValue(value)
     setEdit(false)
   }
+
+  const _handleArchive = async taskData => {
+    listData.isArchived = true;
+    try {
+      await update_list(listData);
+    } catch (error) {
+      alert("somethig happend while archiving list ", error);
+    }
+  };
 
   const _handleSubmit = async e => {
     e.preventDefault()
@@ -72,10 +89,17 @@ const ListTitle = ({ value, dragHandle, reference, update_list }) => {
     );
   }
   return (
-    <Title onClick={()=>setEdit(true)} {...dragHandle}>
-      {value}
-    </Title>
-  )
+    <ContextMenuTrigger id={listData.sid}>
+      <Title onClick={() => setEdit(true)} {...dragHandle}>
+        {value}
+      </Title>
+      <ContMenu
+        id={listData.sid}
+        title={value}
+        menus={ListMenu(listData, _handleArchive)}
+      />
+    </ContextMenuTrigger>
+  );
 }
 
 export default connect(

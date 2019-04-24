@@ -6,6 +6,7 @@ import TasksContainer from "../../Tasks/TasksContainer";
 import Adder from "../../Adder";
 import ListAdder from '../../Adder/ListAdder'
 
+
 const Container = styled.div`
   display: inline-flex;
 `;
@@ -33,6 +34,8 @@ const List = styled.div`
   `}
 `;
 
+
+
 // byId - lists
 const ListsContainer = ({ board_data }) => {
   const adderRef = useRef(null)
@@ -44,33 +47,33 @@ const ListsContainer = ({ board_data }) => {
       adderRef.current.scrollIntoView();
     }
   });
-
+  const filtered = byId.filter(id => !lists[id].isArchived).sort((a,b) => lists[a].pos > lists[b].pos ? 1 : -1)
   return (
     <Droppable droppableId="container" type="LIST" direction="horizontal">
       {provided => (
         <>
           <Container ref={provided.innerRef} {...provided.droppableProps}>
-            {byId.map((id, idx) => (
+            {filtered.map((id, idx) => (
               <Draggable draggableId={id} index={idx} key={id}>
                 {(provided, snapshot) => (
-                  <ListContainer
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                  >
-                    <List isDragging={snapshot.isDragging}>
-                      <ListTitle
-                        value={lists[id].title}
-                        dragHandle={provided.dragHandleProps}
-                        reference = {{
-                          persist: board_data.type ? false : true,
-                          sid: id,
-                          bid: rest.current.sid,
-                          boardType: rest.current.type
-                        }}
-                      />
-                      <TasksContainer listId={id} {...rest} />
-                    </List>
-                  </ListContainer>
+                     <ListContainer
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                      >
+                        <List isDragging={snapshot.isDragging}>
+                          <ListTitle
+                            value={lists[id].title}
+                            dragHandle={provided.dragHandleProps}
+                            reference={{
+                              persist: board_data.type ? false : true,
+                              sid: id,
+                              bid: rest.current.sid,
+                              boardType: rest.current.type
+                            }}
+                          />
+                          <TasksContainer listId={id} {...rest} />
+                        </List>
+                      </ListContainer>
                 )}
               </Draggable>
             ))}

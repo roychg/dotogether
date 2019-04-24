@@ -39,6 +39,7 @@ const BoardPanel = ({ teams, boards, user }) => {
           />
         </React.Fragment>
         {teams.byId.map(id => {
+          const teamBoardById = boards.teamIds.filter(info => info.id.split("@")[1] === id)
           return (
             <React.Fragment key={id}>
               <GridTitle>
@@ -47,12 +48,11 @@ const BoardPanel = ({ teams, boards, user }) => {
                   reference={{
                     id: id
                   }}
+                  visible={teamBoardById.length ? false : true}
                 />
               </GridTitle>
               <GridContainer
-                ids={boards.teamIds.filter(
-                  info => info.id.split("@")[1] === id
-                )}
+                ids={teamBoardById}
                 data={boards.teams}
                 handleAdder={_toggleAdder}
                 target={id}

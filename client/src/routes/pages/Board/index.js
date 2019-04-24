@@ -55,6 +55,7 @@ const Board = ({ dragEnd, board_data, handleTask }) => {
             />
             <BoardMenu
               tasks={board_data.tasks}
+              lists={board_data.lists}
               reference={{
                 persist: board_data.type ? false : true,
                 board: current

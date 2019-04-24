@@ -5,6 +5,7 @@ import { FiMoreHorizontal, FiX, FiRotateCcw } from "react-icons/fi";
 import { connect } from "react-redux";
 import { update_board } from "redux/modules/boards";
 import { update_task, set_task } from "redux/modules/tasks";
+import { update_list } from "redux/modules/lists";
 import Text from 'components/Text'
 import Divider from "components/Divider";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -45,9 +46,10 @@ const ArchivedTask = styled.div`
 
 
 
-const BoardMenu = ({ reference, update_board, tasks, update_task, set_task }) => {
+const BoardMenu = ({ reference, update_board, tasks,lists, update_task, set_task, update_list }) => {
   const boardData = { ...reference }
   const taskData = { ...reference, boardType: reference.board.type }
+  const listData = { ...reference, boardType: reference.board.type }
   const [menuOpen, toggleMenu] = useState(false)
   const [archiveOpen, toggleArchives] = useState(false)
 
@@ -65,11 +67,17 @@ const BoardMenu = ({ reference, update_board, tasks, update_task, set_task }) =>
     }
   }
 
-  const _updateArchived = async (taskId) => {
-    taskData.sid = taskId
-    taskData.isArchived = false
+  const _updateArchived = async (type, id) => {
+    if(type === 'tasks'){
+      taskData.sid = id;
+      taskData.isArchived = false
+      await update_task(taskData)
+    }else{
+      listData.sid = id;
+      listData.isArchived = false;
+      await update_list(listData);
+    }
     // console.log(taskData)
-    await update_task(taskData)
   }
 
   return(
@@ -97,7 +105,21 @@ const BoardMenu = ({ reference, update_board, tasks, update_task, set_task }) =>
                       <ArchivedTask onClick={()=>set_task(id)}>
                       <Text >{tasks.tasks[id].title}</Text>
                       </ArchivedTask>
-                      <Icon icon={<FiRotateCcw />} onClick={()=>_updateArchived(id)}/>
+                      <Icon icon={<FiRotateCcw />} onClick={()=>_updateArchived('tasks',id)}/>
+                    </ArchivedWrapper>
+                  );
+                }
+                return null
+            })}
+              {lists.byId.map(id => {
+                if(lists.lists[id].isArchived){
+                  return (
+                    <ArchivedWrapper key={id}>
+                      <Text color='green'>L</Text>
+                      <ArchivedTask onClick={()=>set_task(id)}>
+                      <Text >{lists.lists[id].title}</Text>
+                      </ArchivedTask>
+                      <Icon icon={<FiRotateCcw />} onClick={()=>_updateArchived('lists',id)}/>
                     </ArchivedWrapper>
                   );
                 }
@@ -114,5 +136,5 @@ const BoardMenu = ({ reference, update_board, tasks, update_task, set_task }) =>
 }
 
 export default connect(
-  null, { update_board, update_task, set_task }
+  null, { update_board, update_task, set_task, update_list }
 )(BoardMenu);

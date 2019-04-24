@@ -38,7 +38,7 @@ class BoardContainer extends Component {
 
   _onEnd = res => { 
     // console.log('real drag eng ', res)
-    const { tasks: { tasks, byId: tbyId } } = this.props.board_data
+    const { tasks: { tasks, byId: tbyId }, lists: { lists, byId: lbyId } } = this.props.board_data
     const { type, source, destination, draggableId } = res
     if(!destination) return;
     if(type === 'TASK'){
@@ -53,9 +53,12 @@ class BoardContainer extends Component {
         this.props.reorder_task_same(source, destination, draggableId, filtered);
       }
     }else{
+      const filtered = lbyId
+        .filter(lid => (!lists[lid].isArchived))
+        .sort((a, b) => (lists[a].pos > lists[b].pos ? 1 : -1));
       if(source.index === destination.index) return;
       // console.log("list reorder ", lbyId, lists);
-      this.props.reorder_list(source.index, destination.index, draggableId, false)
+      this.props.reorder_list(source.index, destination.index, draggableId, filtered, false)
     }
   }
 

@@ -4,6 +4,7 @@ import { base as baseActions } from "redux/base/actions";
 import * as types from "redux/base/actionTypes";
 import { norm_list } from "redux/base/normalize";
 import { handleActions } from "redux-actions";
+import union from 'lodash/union'
 import produce from "immer";
 
 const initState = {
@@ -33,7 +34,8 @@ const lists = handleActions(
     },
     [types.REORDER_LIST]: (state, { payload: { newArr, dragId, pos } }) => {
       return produce(state, draft => {
-        draft.byId = newArr;
+        // state.byId - original array containing all list ids. newarray - new array created by reordering lists which their isArchived field is false.
+        draft.byId = union(state.byId, newArr); 
         draft.lists[dragId].pos = pos;
       });
     },
@@ -104,12 +106,12 @@ export const post_reorder = listData => async dispatch => {
 }
 
 
-export const reorder_list = (srcIdx, destIdx, dragId, isDemo) => async (dispatch, getState) => {
+export const reorder_list = (srcIdx, destIdx, dragId, filtered, isDemo) => async (dispatch, getState) => {
   // console.log(srcIdx, destIdx, byId)
   // console.log("REORDER_LIST REDUCER");
   const current = getState().boards.currentBoard
   const lists = getState().lists.lists
-  const byId = getState().lists.byId.slice()
+  const byId = filtered.slice()
 
   let pos = 0;
   const moveLeft = srcIdx > destIdx ? true : false
