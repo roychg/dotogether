@@ -121,6 +121,7 @@ export const reorder_task_same = (src, dest, dragId, byId, isDemo) => async (dis
   }
 
   try {
+    dispatch(baseActions.emitServer(taskActions.reorderTask({ dragId, destId, pos })));
     dispatch(taskActions.reorderTask({dragId, destId, pos}))
     if (!isDemo) {
       await dispatch(post_reorder({ id: dragId, pos: pos, lid: destId }));
