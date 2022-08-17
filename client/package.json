@@ -6,6 +6,7 @@
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
     "axios": "^0.18.0",
+    "babel-jest": "24.9.0",
     "normalizr": "^3.3.0",
     "rc-datepicker": "^5.0.13",
     "react": "^16.8.6",
@@ -51,7 +52,6 @@
     ]
   },
   "devDependencies": {
-  "http-proxy-middleware": "^0.19.1"
-}
-  
+    "http-proxy-middleware": "^0.19.1"
+  }
 }
