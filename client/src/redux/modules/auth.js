@@ -1,4 +1,4 @@
-import * as types from 'redux/base/actionTypes'
+import * as types from '../../redux/base/actionTypes'
 import { handleActions } from 'redux-actions'
 
 const initState = { 

@@ -1,5 +1,5 @@
 import React from "react";
-import BoardContainer from '../../containers/Board'
+import BoardContainer from 'routes/containers/Board'
 import flow from 'lodash/flow'
 import withUser from "utils/hocs/withUser";
 import { Redirect } from "react-router-dom";

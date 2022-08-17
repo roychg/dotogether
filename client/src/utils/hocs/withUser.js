@@ -4,7 +4,7 @@ import { validate_user } from "redux/modules/base";
 import { withRouter } from "react-router-dom";
 import Loading from "components/Loading";
 
-export default WrappedComponent => {
+const  a = WrappedComponent => {
   class withUser extends Component {
     state = {
       isValidating: !this.props.auth.isAuthenticated
@@ -42,3 +42,5 @@ export default WrappedComponent => {
     )(withUser)
   );
 };
+
+export default a;
