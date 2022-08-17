@@ -71,6 +71,7 @@ export const add_task = taskData => async (dispatch) => {
    } else {
      normalized = norm_task(rest)
    }
+   dispatch(baseActions.emitServer(taskActions.addTask(normalized)));
    if(boardType === 'personal'){
     dispatch(taskActions.addTask(normalized))
    }else{
@@ -154,6 +155,7 @@ export const reorder_task_diff = (src, dest, dragId, byId, isDemo) => async (dis
   
   try {
     dispatch(taskActions.reorderTask({ dragId, destId, pos }));
+    dispatch(baseActions.emitServer(taskActions.reorderTask({ dragId, destId, pos })));
     if (!isDemo) {
       await dispatch(post_reorder({ id: dragId, pos: pos, lid: destId }));
       if (current.type === "team") {
@@ -186,6 +188,7 @@ export const update_task = taskData => async dispatch => {
     } else {
       dispatch(baseActions.emitServer(taskActions.updateTask(normalized)));
     }
+    dispatch(baseActions.emitServer(taskActions.updateTask(normalized)));
     return Promise.resolve(true);
   } catch (error) {
     return Promise.reject(false);

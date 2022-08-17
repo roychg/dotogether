@@ -32,6 +32,7 @@ const lists = handleActions(
       });
     },
     [types.REORDER_LIST]: (state, { payload: { newArr, dragId, pos } }) => {
+      // console.log("reorder list")
       return produce(state, draft => {
         draft.byId = newArr;
         draft.lists[dragId].pos = pos;
@@ -57,11 +58,12 @@ export const add_list = listData => async dispatch => {
     } else {
       normalized = norm_list(rest);
     }
-    if (boardType === "personal") {
-      dispatch(listActions.addList(normalized));
-    } else {
-      dispatch(baseActions.emitServer(listActions.addList(normalized)));
-    }
+    // if (boardType === "personal") {
+    //   dispatch(listActions.addList(normalized));
+    // } else {
+    //   dispatch(baseActions.emitServer(listActions.addList(normalized)));
+    // }
+    dispatch(baseActions.emitServer(listActions.addList(normalized)));
 
     // Return promise in order to close adder
     return Promise.resolve(true);
@@ -81,11 +83,12 @@ export const update_list = listData => async dispatch => {
     }else{
       normalized = norm_list(rest)
     }
-    if (boardType === "personal") {
-      dispatch(listActions.updateList(normalized));
-    } else {
-      dispatch(baseActions.emitServer(listActions.updateList(normalized)));
-    }
+    dispatch(baseActions.emitServer(listActions.updateList(normalized)));
+    // if (boardType === "personal") {
+    //   dispatch(listActions.updateList(normalized));
+    // } else {
+    //   dispatch(baseActions.emitServer(listActions.updateList(normalized)));
+    // }
   } catch (error) {
     console.log('err while updating a list ', error)
     return Promise.reject(false)
@@ -105,7 +108,7 @@ export const post_reorder = listData => async dispatch => {
 
 
 export const reorder_list = (srcIdx, destIdx, dragId, isDemo) => async (dispatch, getState) => {
-  // console.log(srcIdx, destIdx, byId)
+  // console.log(getState())
   // console.log("REORDER_LIST REDUCER");
   const current = getState().boards.currentBoard
   const lists = getState().lists.lists
@@ -130,6 +133,8 @@ export const reorder_list = (srcIdx, destIdx, dragId, isDemo) => async (dispatch
   try{
     const newArr = await array_reorder(byId, srcIdx, destIdx)
     await dispatch(listActions.reorderList({newArr, dragId, pos}))
+    dispatch(baseActions.emitServer(listActions.reorderList({ newArr, dragId, pos })));
+    // console.log(newArr, dragId, pos)
     if (!isDemo) {
       await dispatch(post_reorder({ id: dragId, pos: pos }));
       if(current.type === 'team'){

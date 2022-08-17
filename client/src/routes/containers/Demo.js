@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { enter_guest, reset_user, init_board } from "redux/modules/base";
+import { enter_guest, reset_user, init_board, join_board } from "redux/modules/base";
 import { reorder_task_same, reorder_task_diff, set_task } from "redux/modules/tasks";
 import { reorder_list } from "redux/modules/lists";
 import Layout from 'components/Layout'
@@ -16,6 +16,7 @@ class DemoContainer extends Component {
   _init = async () => {
     await this.props.enter_guest()
     await this.props.init_board("demo");
+    await this.props.join_board("demo")
     await this.setState({ board_data: {type:'demo', ...this.props.board_data} })
     this.setState({ isLoading: false });
   }
@@ -105,6 +106,6 @@ export default connect(
     reorder_task_same,
     reorder_task_diff,
     reorder_list,
-    set_task
+    set_task, join_board
   }
 )(DemoContainer);

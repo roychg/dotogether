@@ -7,6 +7,7 @@ const db = require('lib/db')
 const bp = require("body-parser");
 const redis = require("./lib/redis");
 const PORT = process.env.PORT || 8080;
+const cors = require('cors')
 let retryCount = 0;
 
 const initializeServer = async () => {
@@ -15,6 +16,7 @@ const initializeServer = async () => {
   const http = require("http").Server(app);
   const passport = require("lib/passport");
   const session = require("lib/session");
+  
 
   // MONGO
   try {
@@ -40,6 +42,7 @@ const initializeServer = async () => {
   // initialize socket
   require("lib/socket")(http);
 
+  app.use(cors());
   app.use(bp.json(), bp.urlencoded({ extended: false }));
   app.use(session(redisClient));
   app.use(passport.initialize());

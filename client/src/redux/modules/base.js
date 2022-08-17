@@ -84,6 +84,7 @@ export const logout = (history) => async dispatch => {
 };
 
 export const join_board = boardId => async dispatch =>{ 
+  // console.log(boardId)
   dispatch(baseActions.emitServer({type:'JOIN', room: boardId}))
 }
 
