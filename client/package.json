@@ -6,7 +6,7 @@
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
     "axios": "^0.18.0",
-    "babel-jest": "24.9.0",
+    "babel-jest": "24.7.1",
     "normalizr": "^3.3.0",
     "rc-datepicker": "^5.0.13",
     "react": "^16.8.6",
